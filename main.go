@@ -28,6 +28,7 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	//http.HandleFunc("/", sayHello)
+
 	r := newRouter()
 	http.ListenAndServe(":8080", r)
 	// if err := http.ListenAndServe(":8080", nil); err != nil {
@@ -40,6 +41,7 @@ func newRouter() *mux.Router {
 	r.HandleFunc("/", sayHello).Methods("GET")
 	r.HandleFunc("/hello/{message}", sayHello).Methods("GET")
 	r.HandleFunc("/modele", templating).Methods("GET")
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./assets/"))))
 	return r
 }
 
