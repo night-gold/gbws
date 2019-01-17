@@ -27,20 +27,21 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	//http.HandleFunc("/", sayHello)
-
 	r := newRouter()
-	http.ListenAndServe(":8080", r)
-	// if err := http.ListenAndServe(":8080", nil); err != nil {
-	//	panic(err)
-	//}
+	if err := http.ListenAndServe(":8080", r); err != nil {
+		panic(err)
+	}
 }
 
 func newRouter() *mux.Router {
 	r := mux.NewRouter()
+	//Simple sayHello function on GET method
 	r.HandleFunc("/", sayHello).Methods("GET")
+	//Say Hello and add the message part of URI
 	r.HandleFunc("/hello/{message}", sayHello).Methods("GET")
+	//show the template layout
 	r.HandleFunc("/modele", templating).Methods("GET")
+	//open a link for serving static files
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./assets/"))))
 	return r
 }
