@@ -43,6 +43,8 @@ func newRouter() *mux.Router {
 	r.HandleFunc("/modele", templating).Methods("GET")
 	//open a link for serving static files
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./assets/"))))
+	//create a form template
+	//r.HandleFunc("/form", formTest)
 	return r
 }
 
@@ -59,3 +61,7 @@ func templating(w http.ResponseWriter, r *http.Request) {
 	}
 	tmpl.Execute(w, data)
 }
+
+//func formTest(w http.ResponseWriter, r *http.Request) {
+// tmpl := template.Must(template.ParseFiles("form.html"))
+//}
