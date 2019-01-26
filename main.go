@@ -38,7 +38,6 @@ func newRouter() *chi.Mux {
 	r.HandleFunc("/", sayHello)
 	r.HandleFunc("/hello/{message}", sayHello)
 	r.HandleFunc("/modele", templating)
-	//r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./assets/"))))
 	return r
 }
 
